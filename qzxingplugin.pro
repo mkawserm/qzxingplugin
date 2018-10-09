@@ -1,10 +1,26 @@
 TEMPLATE = lib
 TARGET = qzxingplugin
-QT += qml quick
-CONFIG += plugin c++11
+TARGET = $$qtLibraryTarget(qzxingplugin)
 
-TARGET = $$qtLibraryTarget($$TARGET)
+QT += qml quick multimedia
+CONFIG += qt plugin c++11
+CONFIG += qzxing_multimedia
+CONFIG -= android_install
+
+
 uri = QZXing
+
+PLUGIN_IMPORT_PATH = QZXing
+
+#target.path = $$[QT_INSTALL_QML]/$$PLUGIN_IMPORT_PATH
+#INSTALLS += target
+#qmldir.files += qmldir qzxingplugin.qmltypes
+#qmldir.path += $$target.path
+#INSTALLS += qmldir
+#qmltypes.commands = qmlplugindump -nonrelocatable QZXing 2.3 > $$PWD/qzxingplugin.qmltypes
+#QMAKE_EXTRA_TARGETS += qmltypes
+
+include(qzxing/src/QZXing.pri)
 
 # Input
 SOURCES += \
@@ -17,6 +33,8 @@ HEADERS += \
 
 DISTFILES = qmldir
 
+
+
 !equals(_PRO_FILE_PWD_, $$OUT_PWD) {
     copy_qmldir.target = $$OUT_PWD/qmldir
     copy_qmldir.depends = $$_PRO_FILE_PWD_/qmldir
@@ -26,9 +44,7 @@ DISTFILES = qmldir
 }
 
 qmldir.files = qmldir
-unix {
-    installPath = $$[QT_INSTALL_QML]/$$replace(uri, \\., /)
-    qmldir.path = $$installPath
-    target.path = $$installPath
-    INSTALLS += target qmldir
-}
+installPath = $$[QT_INSTALL_QML]/$$replace(uri, \\., /)
+qmldir.path = $$installPath
+target.path = $$installPath
+INSTALLS += target qmldir
