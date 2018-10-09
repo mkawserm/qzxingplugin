@@ -1,17 +1,13 @@
 TEMPLATE = lib
 TARGET = qzxingplugin
-TARGET = $$qtLibraryTarget(qzxingplugin)
+TARGET = $$qtLibraryTarget($$TARGET)
 
 QT += qml quick multimedia
 CONFIG += qt plugin c++11
 CONFIG += qzxing_multimedia
 CONFIG -= android_install
 
-
-uri = QZXing
-
-PLUGIN_IMPORT_PATH = QZXing
-
+#PLUGIN_IMPORT_PATH = QZXing
 #target.path = $$[QT_INSTALL_QML]/$$PLUGIN_IMPORT_PATH
 #INSTALLS += target
 #qmldir.files += qmldir qzxingplugin.qmltypes
@@ -33,8 +29,7 @@ HEADERS += \
 
 DISTFILES = qmldir
 
-
-
+uri = QZXing
 !equals(_PRO_FILE_PWD_, $$OUT_PWD) {
     copy_qmldir.target = $$OUT_PWD/qmldir
     copy_qmldir.depends = $$_PRO_FILE_PWD_/qmldir
